@@ -16,11 +16,5 @@ class BrowserConfig:
     def get_browser(self):
         return self.__browser
 
-    # def get_display_type(self):
-    #     return self.__display_type
-    #
-    # def get_elem_timeout(self):
-    #     return self.__elem_timeout
-    #
-    # def get_browser_base_url(self):
-    #     return self.__browser_base_url
+    def get_browser_base_url(self):
+        return self.__browser_base_url
