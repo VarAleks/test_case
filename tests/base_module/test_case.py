@@ -15,6 +15,10 @@ class TestClass(TestBase):
         elements_page = ElementsPage(browser)
         elements_page.should_be_elements_page()
 
+        elements_page.click_check_box_in_menu()
+        elements_page.should_be_tree_node()
+
+        elements_page.click_home_toggle()
 
         pass
 
