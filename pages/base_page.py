@@ -1,3 +1,4 @@
+from not_ui_helpers.assert_exception import AssertException
 from pages import pase_selectors
 from selenium.common.exceptions import WebDriverException
 from selenium.webdriver import ActionChains
@@ -347,150 +348,73 @@ class BasePage:
         """
         return self.wait_contain_value(selector + " input", expected_value, timeout)
 
-    # def wait_contain_attribute_value(self, selector, attr, expected_value, timeout=ELEM_TIMEOUT):
-    #     """
-    #     Ожидание, пока значение атрибута attr не будет содержать в себе expected_value.
-    #
-    #     :param selector: селектор
-    #     :param attr: атрибут
-    #     :param expected_value: ожидаемое значение атрибута
-    #     :param timeout: максимальное время ожидания
-    #     """
-    #
-    #     def wait_contain_attribute(driver):
-    #         actual_value = self.get_attribute(selector, attr, 0)
-    #         if expected_value in actual_value:
-    #             return AssertException(expected_value, expected_value)
-    #         else:
-    #             raise AssertException(expected_value, actual_value)
-    #
-    #     try:
-    #         return self.elem_act_until(wait_contain_attribute, timeout)
-    #     except Exception as ex:
-    #         if isinstance(ex.args[1], AssertException):
-    #             return ex.args[1]
-    #         else:
-    #             return AssertException(expected_value, ex)
-    #
-    # def wait_text_appear(self, selector, expected, timeout=ELEM_TIMEOUT):
-    #     """
-    #     Ожидание, пока текстовое содержимое элемента не будет равно ожидаемому тексту.
-    #
-    #     :param selector: селектор
-    #     :param expected: ожидаемый текст
-    #     :param timeout: максимальное время ожидания
-    #     """
-    #
-    #     def wait_contain_text(driver):
-    #         actual = self.get_element_text(selector, 0).strip()
-    #         if expected == actual:
-    #             return AssertException(expected, expected)
-    #         else:
-    #             raise AssertException(expected, actual)
-    #
-    #     try:
-    #         expected = expected.strip()
-    #         return self.elem_act_until(wait_contain_text, timeout)
-    #     except Exception as ex:
-    #         if isinstance(ex.args[1], AssertException):
-    #             return ex.args[1]
-    #         else:
-    #             return AssertException(expected, ex)
-    #
-    # def wait_contain_text(self, selector, expected, timeout=ELEM_TIMEOUT):
-    #     """
-    #     Ожидание, пока текстовое содержимое элемента не будет содержать в себе ожидаемый текст.
-    #
-    #     :param selector: селектор
-    #     :param expected: ожидаемый текст
-    #     :param timeout: максимальное время ожидания
-    #     """
-    #
-    #     def wait_contain_text(driver):
-    #         actual = self.get_element_text(selector, 0)
-    #         if expected in actual:
-    #             return AssertException(expected, expected)
-    #         else:
-    #             raise AssertException(expected, actual)
-    #
-    #     try:
-    #         return self.elem_act_until(wait_contain_text, timeout)
-    #     except Exception as ex:
-    #         if isinstance(ex.args[1], AssertException):
-    #             return ex.args[1]
-    #         else:
-    #             return AssertException(expected, ex)
-    #
-    # def wait_count_elements_presence(self, selector, expected_count, timeout=ELEM_TIMEOUT):
-    #     """
-    #    Ожидание, пока не будет найдено ожидаемое количество элементов.
-    #
-    #    :param selector: селектор
-    #    :param expected_count: ожидаемое количество элементов
-    #    :param timeout: максимальное время ожидания
-    #    """
-    #
-    #     def wait_count_elements_presence(driver):
-    #         actual_count = len(self.find_elements(selector, 0))
-    #         if expected_count == actual_count:
-    #             return AssertException(expected_count, actual_count)
-    #         else:
-    #             raise AssertException(expected_count, actual_count)
-    #
-    #     try:
-    #         return self.elem_act_until(wait_count_elements_presence, timeout)
-    #     except Exception as ex:
-    #         if isinstance(ex.args[1], AssertException):
-    #             return ex.args[1]
-    #         else:
-    #             return AssertException(expected_count, ex)
-    #
-    # def wait_expected_current_url(self, expected_url, timeout=ELEM_TIMEOUT):
-    #     """
-    #     Ожидание, пока текущий url не будет равен ожидаемому.
-    #
-    #     :param expected_url: ожидаемый url
-    #     :param timeout: максимальное время ожидания
-    #     """
-    #
-    #     def wait_expected_current_url(driver):
-    #         actual_url = driver.current_url
-    #         if expected_url == actual_url:
-    #             return AssertException(expected_url, actual_url)
-    #         else:
-    #             raise AssertException(expected_url, actual_url)
-    #
-    #     try:
-    #         return self.elem_act_until(wait_expected_current_url, timeout)
-    #     except Exception as ex:
-    #         if isinstance(ex.args[1], AssertException):
-    #             return ex.args[1]
-    #         else:
-    #             return AssertException(expected_url, ex)
+    def wait_text_appear(self, selector, expected, timeout=ELEM_TIMEOUT):
+        """
+        Ожидание, пока текстовое содержимое элемента не будет равно ожидаемому тексту.
 
-    # def assert_table_load(self):
-    #     """
-    #     Проверяет, что таблица на странице загрузилась.
-    #     """
-    #     self.assert_presence(selectors.Table.TABLE_BODY,
-    #                          f"Таблица {selectors.Table.TABLE_BODY} не была загружена на странице")
-    #
+        :param selector: селектор
+        :param expected: ожидаемый текст
+        :param timeout: максимальное время ожидания
+        """
+
+        def wait_contain_text(driver):
+            actual = self.get_element_text(selector, 0).replace(' ', '')
+            if expected == actual:
+                return AssertException(expected, expected)
+            else:
+                raise AssertException(expected, actual)
+
+        try:
+            expected = expected.replace(' ', '')
+            return self.elem_act_until(wait_contain_text, timeout)
+        except Exception as ex:
+            if isinstance(ex.args[1], AssertException):
+                return ex.args[1]
+            else:
+                return AssertException(expected, ex)
+
+    def wait_contain_attribute_value(self, selector, attr, expected_value, timeout=ELEM_TIMEOUT):
+        """
+        Ожидание, пока значение атрибута attr не будет содержать в себе expected_value.
+
+        :param selector: селектор
+        :param attr: атрибут
+        :param expected_value: ожидаемое значение атрибута
+        :param timeout: максимальное время ожидания
+        """
+
+        def wait_contain_attribute(driver):
+            actual_value = self.get_attribute(selector, attr, 0)
+            if expected_value in actual_value:
+                return AssertException(expected_value, expected_value)
+            else:
+                raise AssertException(expected_value, actual_value)
+
+        try:
+            return self.elem_act_until(wait_contain_attribute, timeout)
+        except Exception as ex:
+            if isinstance(ex.args[1], AssertException):
+                return ex.args[1]
+            else:
+                return AssertException(expected_value, ex)
+
     def assert_page_load(self, msg="", timeout=ELEM_TIMEOUT):
         """
         Ожидание и проверка, что страница загрузилась.
         """
         pass
         self.assert_presence(pase_selectors.BasePage.APP, \
-            "Страница '{0}' не загрузилась".format(msg), timeout)
-    #
-    # def assert_exp_act(self, assert_exception, msg=""):
-    #     """
-    #     Проверка результата ожидания на странице.
-    #
-    #     :param assert_exception: объект классса AssertException, возвращаемый методами not_url_page.wait...
-    #     :param msg: сообщение, выдаваемое в случае несовпадения ожидаемого значения и фактического
-    #     """
-    #     assert assert_exception.expected == assert_exception.actual, msg + assert_exception.assert_msg
+                             "Страница '{0}' не загрузилась".format(msg), timeout)
+
+    def assert_exp_act(self, assert_exception, msg=""):
+        """
+        Проверка результата ожидания на странице.
+
+        :param assert_exception: объект классса AssertException, возвращаемый методами not_url_page.wait...
+        :param msg: сообщение, выдаваемое в случае несовпадения ожидаемого значения и фактического
+        """
+        assert assert_exception.expected == assert_exception.actual, msg + assert_exception.assert_msg
+
     #
     def assert_presence(self, selector, msg="", timeout=ELEM_TIMEOUT):
         """
@@ -505,72 +429,6 @@ class BasePage:
             self.is_presence(selector, timeout)
         except Exception as ex:
             raise AssertionError("{0}\n{1}".format(msg, ex.args[0]))
-    #
-    # def assert_no_presence(self, selector, msg="", load_dom_timeout=1, timeout=ELEM_TIMEOUT):
-    #     """
-    #     Ожидание и проверка исчезновения элемента на странице в течение таймаута.
-    #
-    #     :param selector: селектор
-    #     :param msg: сообщение, в случае отсутствия элемента на странице
-    #     :param load_dom_timeout: ожидание времени загрузки html элементов
-    #     :param timeout: максимальное время ожидания
-    #     :return: raise AssertionError если элемент не исчез за интервал timeout
-    #     """
-    #     try:
-    #         self.is_no_presence(selector, load_dom_timeout, timeout)
-    #     except Exception as ex:
-    #         raise AssertionError("{0}\n{1}".format(msg, ex.args[0]))
-    #
-    # def is_checked_radio(self, radio_group_id, value):
-    #     """
-    #     Проверяет, выбран ли radiobutton.
-    #
-    #     :param radio_group_id: идентификатор группы radiobutton
-    #     :param value: значение того radiobutton, которого проверяем
-    #     :return: True, если radiobutton выбран, иначе - False
-    #     """
-    #     return self.find_element(selectors.Page.RADIO_BUTTON.format(radio_group_id, value)).is_selected()
-    #
-    # def should_be_validation_field(self, elem_id):
-    #     """
-    #     Проверка присутствия сообщения валидации для поля.
-    #
-    #     :param elem_id: идентификатор поля
-    #     """
-    #     self.assert_presence(selectors.get_test_id_valid_err(elem_id),
-    #                          "Валидация поля {0} не обнаружена".format(elem_id))
-    #
-    # def should_be_exported_file(self, format='xlsx'):
-    #     """
-    #     Проверка, что файл с заданным расширением экспортировался во временную папку для теста.
-    #
-    #     :param format: расширение экспортируемого файла
-    #     """
-    #     dir = self.get_browser().tmpdir
-    #     assert tmp_folder_service.is_not_empty_tmp_dir(dir) and format in tmp_folder_service.get_first_tmp_folder_file(
-    #         dir).basename, f'Экспортированный {format} файл не был найден после экспорта в папке {dir} '
-    #
-    # def assert_success_notice_bar(self):
-    #     """
-    #     Проверка присутствия лейбла об успешной операции.
-    #     """
-    #     self.assert_presence(selectors.Page.ALERT_SUCCESS, "Лейбл {0} не был найден на странице".format(
-    #         selectors.Page.ALERT_SUCCESS))
-    #
-    # def assert_error_notice_bar(self):
-    #     """
-    #     Проверка присутствия лейбла об ошибке операции.
-    #     """
-    #     self.assert_presence(selectors.Page.ALERT_ERROR, "Лейбл {0} не был найден на странице".format(
-    #         selectors.Page.ALERT_ERROR))
-
-    # def open_url(self, url):
-    #     """
-    #     Открывает заданный url на странице.
-    #
-    #     :param url: открываемый url
-    #     """
-    #     self._browser.get_driver().get("http://" + url)
 
     def refresh_page(self):
         self.get_browser().refresh_page()
@@ -590,9 +448,3 @@ class BasePage:
             return By.XPATH, selector
         elif selector[0] == "[" or selector[0] == "#":
             return By.CSS_SELECTOR, selector
-
-    # def set_upload_input_path(self, selector, path, timeout=ELEM_TIMEOUT):
-    #     """
-    #     Устанавливает значение value в input (можно использовать для установки пути для загрузки файла на сервер)K
-    #     """
-    #     self.find_element(selector, timeout).send_keys(path)

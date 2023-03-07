@@ -19,6 +19,13 @@ class TestClass(TestBase):
         elements_page.should_be_tree_node()
 
         elements_page.click_home_toggle()
+        elements_page.should_be_expand_home_tree()
+
+        elements_page.click_downloads_toggle()
+        elements_page.should_be_expand_download_tree()
+
+        elements_page.click_word_file_in_tree()
+        elements_page.should_be_success_text()
 
         pass
 
