@@ -1,1 +1,1 @@
-/venv/bin/python3 -m pytest tests/base_module --browser=chrome
+venv/bin/python3 -m pytest tests/base_module --browser=chrome
