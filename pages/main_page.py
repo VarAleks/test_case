@@ -10,4 +10,7 @@ class MainPage(BasePage):
         super().__init__(browser)
 
     def click_elements(self):
+        """
+        Кликает на карточку Elements на странице
+        """
         self.click_element(pase_selectors.MainPage.EVENTS_BTN)

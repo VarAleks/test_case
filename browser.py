@@ -1,7 +1,7 @@
 from selenium import webdriver
 
-from not_ui_helpers.browser_config import BrowserConfig
-from not_ui_helpers.config_service import ConfigService
+from services.browser_config import BrowserConfig
+from services.config_service import ConfigService
 
 
 class Browser:

@@ -8,6 +8,7 @@ class BrowserConfig:
     def __init__(self, browser_base_url, browser=CHROME):
         """
         :param browser: тип используемого браузера
+        :param browser_base_url: основной домен приложения (страницы)
         """
         self.__browser = browser
         self.__elem_timeout = 30
