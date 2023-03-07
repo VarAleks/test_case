@@ -74,4 +74,4 @@ class CheckBoxPage(BasePage):
         """
         Проверка, что страница checkbox загрузилась (дерево home присутствует на странице)
         """
-        self.assert_presence(pase_selectors.ElementsPage.CHECK_BOX_TREE, "Страница CheckBox не загрузилась")
+        self.assert_presence(self.select.CHECK_BOX_TREE, "Страница CheckBox не загрузилась")
