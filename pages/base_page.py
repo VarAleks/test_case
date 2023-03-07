@@ -358,14 +358,14 @@ class BasePage:
         """
 
         def wait_contain_text(driver):
-            actual = self.get_element_text(selector, 0).replace(' ', '')
+            actual = self.get_element_text(selector, 0).replace(' ', '').replace('\n', '')
             if expected == actual:
                 return AssertException(expected, expected)
             else:
                 raise AssertException(expected, actual)
 
         try:
-            expected = expected.replace(' ', '')
+            expected = expected.replace(' ', '').replace('\n', '')
             return self.elem_act_until(wait_contain_text, timeout)
         except Exception as ex:
             if isinstance(ex.args[1], AssertException):
@@ -446,5 +446,5 @@ class BasePage:
         """
         if selector[0] == "/":
             return By.XPATH, selector
-        elif selector[0] == "[" or selector[0] == "#":
+        else:
             return By.CSS_SELECTOR, selector

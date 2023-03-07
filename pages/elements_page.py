@@ -36,7 +36,7 @@ class ElementsPage(BasePage):
 
     def should_be_expand_download_tree(self):
         self.assert_exp_act(
-            self.wait_contain_attribute_value(self.select.DOWNLOADS_TREE_NODE, 'class', 'rct-node-expanded', 5),
+            self.wait_contain_attribute_value(self.select.DOWNLOADS_TREE_NODE, 'class', 'rct-node-expanded'),
             'Дерево DOWNLOAD не раскрылось')
 
     def should_be_expand_home_tree(self):
@@ -48,4 +48,4 @@ class ElementsPage(BasePage):
         self.assert_presence(pase_selectors.ElementsPage.CHECK_BOX_TREE, "Дерево CheckBox не обнаружено на странице")
 
     def should_be_elements_page(self):
-        self.assert_presence(pase_selectors.ElementsPage.MAIN_HEADER, "Страница Elements не загрузилась")
+        self.assert_presence(pase_selectors.ElementsPage.ELEMENTS_HEADER, "Страница Elements не загрузилась")

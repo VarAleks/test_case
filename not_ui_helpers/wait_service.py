@@ -40,7 +40,7 @@ class WaitService:
                 break
         if exception is not None:
             if message:
-                raise Exception("{0} {1}".format(message, exception.args[0]), exception)
+                raise Exception("{0} {1}".format(message, exception.args), exception)
             raise Exception(exception)
         elif value is None:
             raise Exception("method returned None value")
